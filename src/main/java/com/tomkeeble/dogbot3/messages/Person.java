@@ -3,6 +3,7 @@ package com.tomkeeble.dogbot3.messages;
 import javax.persistence.*;
 
 @Entity
+@Table(name="person")
 public class Person {
 
     @Id

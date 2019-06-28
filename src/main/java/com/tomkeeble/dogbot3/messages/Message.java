@@ -3,16 +3,17 @@ package com.tomkeeble.dogbot3.messages;
 import javax.persistence.*;
 
 @Entity
+@Table(name="message")
 public class Message {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-    @OneToMany
+    @ManyToOne
     private Group group;
 
-    @OneToMany
+    @ManyToOne
     private Actor actor;
 
     private String message;

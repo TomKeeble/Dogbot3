@@ -4,8 +4,11 @@ import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.MessageProvider;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name="group")
 public class Group {
 
     @Id
@@ -23,6 +26,26 @@ public class Group {
      */
     private String groupId;
 
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    @OneToMany(
+            mappedBy = "group",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Actor> actors = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "group",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Message> messages = new ArrayList<>();
+
+
+    @Transient
     private MessageProvider messageProvider=Dogbot3.getMessageProvider();
 
 

@@ -2,10 +2,14 @@ package com.tomkeeble.dogbot3.messages;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A person interacting in a group chat
  */
+@Entity
+@Table(name="actor")
 public class Actor {
 
     @Id
@@ -16,6 +20,13 @@ public class Actor {
     private Person person;
 
     private String nickname;
+
+    @OneToMany(
+            mappedBy = "actor",
+            cascade = CascadeType.ALL,
+            orphanRemoval = false
+    )
+    private List<Message> messages = new ArrayList<>();
 
 
     @ManyToOne
