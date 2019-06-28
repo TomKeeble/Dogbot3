@@ -1,5 +1,8 @@
 package com.tomkeeble.dogbot3.messages;
 
+import com.tomkeeble.dogbot3.Dogbot3;
+import com.tomkeeble.dogbot3.MessageProvider;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +11,25 @@ public class Group {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
+
+
+    /**
+     * The name of the group (according to fb)
+     */
+    private String name;
+
+    /**
+     * The group's ID (according to fb)
+     */
+    private String groupId;
+
+    private MessageProvider messageProvider=Dogbot3.getMessageProvider();
+
+
+    public void sendMessage(Message message) {
+
+        this.messageProvider.sendMessage(this, message);
+    }
 
     public String getName() {
         return name;
@@ -25,13 +47,14 @@ public class Group {
         this.groupId = groupId;
     }
 
-    /**
-     * The name of the group (according to fb)
-     */
-    private String name;
+    public MessageProvider getMessageProvider() {
+        return messageProvider;
+    }
 
-    /**
-     * The group's ID (according to fb)
-     */
-    private String groupId;
+    public void setMessageProvider(MessageProvider messageProvider) {
+        this.messageProvider = messageProvider;
+    }
+
+
+
 }
