@@ -1,0 +1,14 @@
+apply plugin: 'idea'
+//and standard one
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+mainClassName = "com.tomkeeble.dogbot3.Main"
+
+dependencies {
+    compile 'org.hibernate:hibernate-core:5.4.3.Final'
+}
