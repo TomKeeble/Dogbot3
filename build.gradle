@@ -15,4 +15,5 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+    compile 'org.json:json:20171018'
 }

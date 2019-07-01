@@ -5,13 +5,14 @@ import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
 import com.tomkeeble.dogbot3.messages.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.SessionFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 public class Dogbot3 {
 
-    private static final Logger logger = LogManager.getLogger(Main.class);
+    private static final Logger logger = LogManager.getLogger(Dogbot3.class);
 
 
     public static MessageProvider getMessageProvider() {
@@ -39,11 +40,17 @@ public class Dogbot3 {
         logger.info("Dogbot3");
         logger.info("Starting Dogbot3...");
 
-        Person p = new Person();
-        p.setName("James");
-        getEntityManager().getTransaction().begin();
-        getEntityManager().persist(p);
-        getEntityManager().getTransaction().commit();
-        logger.info("added test person");
+//        Person p = new Person();
+//        p.setName("James");
+//        getEntityManager().getTransaction().begin();
+//        getEntityManager().persist(p);
+//        getEntityManager().getTransaction().commit();
+//        logger.info("added test person");
+        Worker w = new Worker();
+        try {
+            w.work();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

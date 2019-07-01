@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="group")
-public class Group {
+@Table(name="thread")
+public class Thread {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -31,14 +31,14 @@ public class Group {
     }
 
     @OneToMany(
-            mappedBy = "group",
+            mappedBy = "thread",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Actor> actors = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "group",
+            mappedBy = "thread",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

@@ -5,13 +5,13 @@
     <persistence-unit name="persistence" transaction-type="RESOURCE_LOCAL">
         <class>com.tomkeeble.dogbot3.messages.Person</class>
         <class>com.tomkeeble.dogbot3.messages.Actor</class>
-        <class>com.tomkeeble.dogbot3.messages.Group</class>
+        <class>com.tomkeeble.dogbot3.messages.Thread</class>
         <class>com.tomkeeble.dogbot3.messages.Message</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
             <property name="eclipselink.ddl-generation" value="create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="database" />
-<!--            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/dogbot" />
             <property name="javax.persistence.jdbc.user" value="dogbot" />

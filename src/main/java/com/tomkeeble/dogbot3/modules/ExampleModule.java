@@ -7,7 +7,7 @@ public class ExampleModule implements Module {
     @Override
     public void processMessage(Message message) {
         System.out.println("Message!");
-        message.getGroup().sendMessage(new Message("Hello World"));
+        message.getThread().sendMessage(new Message("Hello World"));
     }
 
     @Override

@@ -11,7 +11,7 @@ public class Message {
     private long id;
 
     @ManyToOne
-    private Group group;
+    private Thread thread;
 
     @ManyToOne
     private Actor actor;
@@ -22,12 +22,12 @@ public class Message {
         this.message = message;
     }
 
-    public Group getGroup() {
-        return group;
+    public Thread getThread() {
+        return thread;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setThread(Thread thread) {
+        this.thread = thread;
     }
 
     public Actor getActor() {

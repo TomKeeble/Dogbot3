@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A person interacting in a group chat
+ * A person interacting in a thread chat
  */
 @Entity
 @Table(name="actor")
@@ -30,7 +30,7 @@ public class Actor {
 
 
     @ManyToOne
-    private Group group;
+    private Thread thread;
 
     public Person getPerson() {
         return person;
@@ -48,12 +48,12 @@ public class Actor {
         this.nickname = nickname;
     }
 
-    public Group getGroup() {
-        return group;
+    public Thread getThread() {
+        return thread;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setThread(Thread thread) {
+        this.thread = thread;
     }
 
 }

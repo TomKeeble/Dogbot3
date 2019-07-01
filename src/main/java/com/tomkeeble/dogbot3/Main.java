@@ -1,7 +1,11 @@
 package com.tomkeeble.dogbot3;
 
+import com.tomkeeble.dogbot3.messages.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,6 +21,9 @@ public class Main {
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+//        Configuration config = new Configuration();
+//        SessionFactory sessionFactory = config.configure().buildSessionFactory();
 
 
         Dogbot3 dogbot = new Dogbot3(entityManager);
