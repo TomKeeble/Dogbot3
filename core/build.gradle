@@ -1,0 +1,25 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+group = 'dogbot3'
+version = '1.0-SNAPSHOT'
+description = "Dogbot3 Server"
+
+repositories {
+    mavenCentral()
+}
+
+//mainClassName = "dogbot3.Main"
+
+dependencies {
+    compile 'org.hibernate:hibernate-core:5.4.3.Final'
+    compile 'com.rabbitmq:amqp-client:5.7.1'
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
+//    implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+    compile 'org.json:json:20171018'
+    compileOnly 'org.wildfly:wildfly-spec-api:11.0.0.Final'
+    compileOnly 'org.wildfly:wildfly-ejb3:11.0.0.Final'
+
+//    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
+}

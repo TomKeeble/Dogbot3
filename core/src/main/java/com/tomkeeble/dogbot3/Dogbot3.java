@@ -1,18 +1,23 @@
 package com.tomkeeble.dogbot3;
 
 import com.rabbitmq.client.ConnectionFactory;
-import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
-import com.tomkeeble.dogbot3.messages.Person;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.hibernate.SessionFactory;
 
+import org.hibernate.SessionFactory;
+import org.jboss.logging.Logger;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+@Singleton
+@Startup
 public class Dogbot3 {
 
-    private static final Logger logger = LogManager.getLogger(Dogbot3.class);
+    private static Logger logger = Logger.getLogger(Dogbot3.class);
 
 
     public static MessageProvider getMessageProvider() {
@@ -31,12 +36,14 @@ public class Dogbot3 {
         ConnectionFactory factory = new ConnectionFactory();
     }
 
-    public Dogbot3(EntityManager em) {
-        entityManager = em;
-        messageProvider = new FacebookMessageProvider();
-    }
+//    public Dogbot3() {
+//        entityManager = null;
+//        messageProvider = new FacebookMessageProvider();
+//    }
 
+    @PostConstruct
     public void start(){
+        System.out.print("Hello World");
         logger.info("Dogbot3");
         logger.info("Starting Dogbot3...");
 

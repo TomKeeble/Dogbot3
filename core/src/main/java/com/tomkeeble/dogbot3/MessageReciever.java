@@ -4,8 +4,7 @@ import com.rabbitmq.client.DeliverCallback;
 import com.rabbitmq.client.Delivery;
 import com.tomkeeble.dogbot3.messages.Thread;
 import com.tomkeeble.dogbot3.messages.Message;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.jboss.logging.Logger;
 import org.json.JSONObject;
 
 import javax.persistence.EntityManager;
@@ -14,7 +13,7 @@ import java.io.IOException;
 
 public class MessageReciever implements DeliverCallback {
 
-    private static final Logger logger = LogManager.getLogger(MessageReciever.class);
+    private static final Logger logger = Logger.getLogger(MessageReciever.class);
 
     public static Thread getGroupByFid(String fid) {
         EntityManager session = Dogbot3.getEntityManager();
