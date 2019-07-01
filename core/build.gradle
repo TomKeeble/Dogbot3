@@ -16,10 +16,11 @@ dependencies {
     compile 'com.rabbitmq:amqp-client:5.7.1'
 //    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
 //    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
-//    implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
     compile 'org.json:json:20171018'
     compileOnly 'org.wildfly:wildfly-spec-api:11.0.0.Final'
     compileOnly 'org.wildfly:wildfly-ejb3:11.0.0.Final'
+    compile group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.6.3'
 
 //    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
 }

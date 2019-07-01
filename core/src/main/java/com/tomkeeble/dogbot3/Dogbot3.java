@@ -2,6 +2,8 @@ package com.tomkeeble.dogbot3;
 
 import com.rabbitmq.client.ConnectionFactory;
 
+import com.tomkeeble.dogbot3.messages.Thread;
+import com.tomkeeble.dogbot3.modules.ExampleModule;
 import org.hibernate.SessionFactory;
 import org.jboss.logging.Logger;
 
@@ -9,9 +11,17 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateless;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Singleton
 @Startup
@@ -26,15 +36,18 @@ public class Dogbot3 {
 
     private static MessageProvider messageProvider;
 
-    public static EntityManager getEntityManager() {
-        return entityManager;
-    }
 
-    private static EntityManager entityManager;
+    @PersistenceContext(unitName = "persistence")
+    private EntityManager entityManager;
 
-    private void connectMQ(){
-        ConnectionFactory factory = new ConnectionFactory();
-    }
+    private final Set<Module> modules = new HashSet<>();
+
+    @Inject
+    private Instance<Module> discovered_modules;
+
+//    private void connectMQ(){
+//        ConnectionFactory factory = new ConnectionFactory();
+//    }
 
 //    public Dogbot3() {
 //        entityManager = null;
@@ -47,17 +60,19 @@ public class Dogbot3 {
         logger.info("Dogbot3");
         logger.info("Starting Dogbot3...");
 
+        logger.info(entityManager.find(Thread.class, Long.valueOf(1)).getName());
+
+        for (Module plugin : discovered_modules) {
+            modules.add(plugin);
+            logger.info("Found module: " + plugin.getClass().getName());
+        }
+
 //        Person p = new Person();
 //        p.setName("James");
 //        getEntityManager().getTransaction().begin();
 //        getEntityManager().persist(p);
 //        getEntityManager().getTransaction().commit();
 //        logger.info("added test person");
-        Worker w = new Worker();
-        try {
-            w.work();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }

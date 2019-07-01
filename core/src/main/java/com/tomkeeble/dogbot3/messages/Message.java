@@ -8,7 +8,7 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @ManyToOne
     private Thread thread;
@@ -20,6 +20,9 @@ public class Message {
 
     public Message(String message) {
         this.message = message;
+    }
+
+    public Message() {
     }
 
     public Thread getThread() {
