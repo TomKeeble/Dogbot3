@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     deploy project(':core')
+    deploy project(':ExampleModule')
     earlib 'org.apache.commons:commons-lang3:3.4'
     earlib 'com.rabbitmq:amqp-client:5.7.1'
     earlib 'org.json:json:20171018'

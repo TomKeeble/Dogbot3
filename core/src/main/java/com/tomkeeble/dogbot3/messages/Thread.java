@@ -45,13 +45,11 @@ public class Thread {
     private List<Message> messages = new ArrayList<>();
 
 
-    @Transient
-    private MessageProvider messageProvider=Dogbot3.getMessageProvider();
 
 
-    public void sendMessage(Message message) {
+    public void sendMessage(MessageProvider mp, Message message) {
 
-        this.messageProvider.sendMessage(this, message);
+        mp.sendMessage(this, message);
     }
 
     public String getName() {
@@ -68,14 +66,6 @@ public class Thread {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
-    }
-
-    public MessageProvider getMessageProvider() {
-        return messageProvider;
-    }
-
-    public void setMessageProvider(MessageProvider messageProvider) {
-        this.messageProvider = messageProvider;
     }
 
 

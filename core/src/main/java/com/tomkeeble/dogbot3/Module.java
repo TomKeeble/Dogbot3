@@ -5,8 +5,9 @@ import com.tomkeeble.dogbot3.messages.Message;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
-@Startup
 public interface Module {
+
+    public String getClassName();
 
     public void processMessage(Message message);
 

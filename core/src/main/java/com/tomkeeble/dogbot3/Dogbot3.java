@@ -1,26 +1,17 @@
 package com.tomkeeble.dogbot3;
 
-import com.rabbitmq.client.ConnectionFactory;
-
+import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
 import com.tomkeeble.dogbot3.messages.Thread;
-import com.tomkeeble.dogbot3.modules.ExampleModule;
-import org.hibernate.SessionFactory;
 import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.ejb.Stateless;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Singleton
@@ -45,14 +36,6 @@ public class Dogbot3 {
     @Inject
     private Instance<Module> discovered_modules;
 
-//    private void connectMQ(){
-//        ConnectionFactory factory = new ConnectionFactory();
-//    }
-
-//    public Dogbot3() {
-//        entityManager = null;
-//        messageProvider = new FacebookMessageProvider();
-//    }
 
     @PostConstruct
     public void start(){
@@ -64,15 +47,14 @@ public class Dogbot3 {
 
         for (Module plugin : discovered_modules) {
             modules.add(plugin);
-            logger.info("Found module: " + plugin.getClass().getName());
+            logger.info("Found module: " + plugin.getClassName());
         }
 
-//        Person p = new Person();
-//        p.setName("James");
-//        getEntityManager().getTransaction().begin();
-//        getEntityManager().persist(p);
-//        getEntityManager().getTransaction().commit();
-//        logger.info("added test person");
+//        messageProvider = new FacebookMessageProvider();
 
+    }
+
+    public Set<Module> getModules(){
+        return modules;
     }
 }
