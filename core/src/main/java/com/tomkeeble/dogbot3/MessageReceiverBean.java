@@ -62,7 +62,9 @@ public class MessageReceiverBean implements MessageListener {
     }
 
     private void callMessageHandlers(com.tomkeeble.dogbot3.messages.Message message) {
-
+        if (message == null){
+            return;
+        }
         for (Module m: dogbot3.getModules()) {
             m.processMessage(message);
 

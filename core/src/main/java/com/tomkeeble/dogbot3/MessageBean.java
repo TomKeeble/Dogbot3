@@ -23,6 +23,10 @@ public class MessageBean {
     private EntityManager entityManager;
 
     public Message processMessage(String msgbody){
+        if (msgbody == null){
+            logger.warn("Null message");
+            return null;
+        }
         JSONObject obj = new JSONObject(msgbody);
 
         com.tomkeeble.dogbot3.messages.Message msg = new com.tomkeeble.dogbot3.messages.Message(obj.getString("message"));

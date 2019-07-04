@@ -27,7 +27,10 @@ public class ExampleModule implements Module {
     @Override
     public void processMessage(Message message) {
         System.out.println("Message!");
-        message.getThread().sendMessage(msg_provider, new Message("Hello World from " + this.getClassName()));
+//        message.getThread().sendMessage(msg_provider, new Message("Hello World from " + this.getClassName()));
+        if (message.getMessage().startsWith("!goodboi")) {
+            message.getThread().sendMessage(msg_provider, new Message(message.getActor().getNickname() + " is a goodboi from " + this.getClassName()));
+        }
     }
 
     @Override
