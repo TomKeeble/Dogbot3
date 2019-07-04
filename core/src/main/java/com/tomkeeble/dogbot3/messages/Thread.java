@@ -44,6 +44,9 @@ public class Thread {
     )
     private List<Message> messages = new ArrayList<>();
 
+    public List<Message> getMessages(){
+        return messages;
+    }
 
 
 
