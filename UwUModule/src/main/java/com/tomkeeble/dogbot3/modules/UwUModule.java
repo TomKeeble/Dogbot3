@@ -34,7 +34,8 @@ public class UwUModule implements Module {
             List<Message> messages=message.getThread().getMessages();
             String uwuText;
             try {
-                uwuText=messages.get(messages.size()-2).getMessage();
+                //uwuText=messages.get(messages.size()-2).getMessage();
+                uwuText=messages.get(1).getMessage();
             }
             catch (Exception ex){
                 uwuText=message.getMessage();
