@@ -38,7 +38,7 @@ public class UwUModule implements Module {
                 uwuText=messages.get(1).getMessage();
             }
             catch (Exception ex){
-                uwuText=message.getMessage();
+                uwuText=message.getMessage() + " (" + ex.getMessage() + ")";
             }
             uwuText=uwuText.replaceAll("[rl]","w");
             uwuText=uwuText.replaceAll("[RL]","W");
