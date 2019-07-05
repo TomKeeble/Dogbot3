@@ -39,12 +39,13 @@ public class UwUModule implements Module {
             catch (Exception ex){
                 uwuText=message.getMessage();
             }
-            uwuText=uwuText.replaceAll("/[rl]/gi","w");
-            uwuText=uwuText.replaceAll("/youw/gi","ur");
-            uwuText=uwuText.replaceAll("/you/gi","u");
-            uwuText=uwuText.replaceAll("/awe /gi","r ");
-            uwuText=uwuText.replaceAll("/ove/gi","uv");
-            uwuText=uwuText.replaceAll("/(n)([aeiou])/gi","$1y$2");
+            uwuText=uwuText.replaceAll("[rl]","w");
+            uwuText=uwuText.replaceAll("[RL]","W");
+            uwuText=uwuText.replaceAll("(?i)youw","ur");
+            uwuText=uwuText.replaceAll("(?i)you","u");
+            uwuText=uwuText.replaceAll("(?i)awe ","r ");
+            uwuText=uwuText.replaceAll("(?i)ove","uv");
+            uwuText=uwuText.replaceAll("(?i)(n)([aeiou])","$1y$2");
             message.getThread().sendMessage(msg_provider, new Message(uwuText));
         }
     }
