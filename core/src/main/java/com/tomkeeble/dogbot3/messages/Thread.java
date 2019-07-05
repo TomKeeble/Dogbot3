@@ -1,9 +1,12 @@
 package com.tomkeeble.dogbot3.messages;
 
-import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.MessageProvider;
+import com.tomkeeble.dogbot3.exceptions.MessageSelectionOutOfRangeException;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +72,28 @@ public class Thread {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public Message getNMessagesBack(EntityManager em, int n) throws MessageSelectionOutOfRangeException {
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<Message> messageRoot = cq.from(Message.class);
+        cq.select(messageRoot)
+                .where(
+                        cb.equal(messageRoot.get("thread"), this.id)
+                ).orderBy(cb.desc(messageRoot.get("id")));
+        Query q = em.createQuery(cq);
+
+        q.setMaxResults(n+1);
+        List rl = q.getResultList();
+        if (rl.size()>=n) {
+            return (Message) q.getResultList().get(n);
+        } else {
+            throw new MessageSelectionOutOfRangeException("Cannot select " + n + " messages back.");
+        }
+
+
     }
 
 

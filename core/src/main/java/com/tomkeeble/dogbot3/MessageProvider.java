@@ -1,7 +1,7 @@
 package com.tomkeeble.dogbot3;
 
-import com.tomkeeble.dogbot3.messages.Thread;
 import com.tomkeeble.dogbot3.messages.Message;
+import com.tomkeeble.dogbot3.messages.Thread;
 
 public interface MessageProvider {
 

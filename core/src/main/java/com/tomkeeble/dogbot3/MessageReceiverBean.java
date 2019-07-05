@@ -1,19 +1,16 @@
 package com.tomkeeble.dogbot3;
 
-import com.tomkeeble.dogbot3.messages.Thread;
-import org.apache.activemq.artemis.jms.client.compatible1X.ActiveMQBytesCompatibleMessage;
+import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
 import org.jboss.ejb3.annotation.ResourceAdapter;
 import org.jboss.logging.Logger;
-import org.json.JSONObject;
 
 import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.inject.Inject;
-import javax.jms.*;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.Query;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 
 @ResourceAdapter("dogbot_mq")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -34,6 +31,9 @@ public class MessageReceiverBean implements MessageListener {
 
     @Inject
     private MessageBean messageBean;
+
+    @Inject
+    FacebookMessageProvider msg_provider;
 
     @Inject
     private Dogbot3 dogbot3;
@@ -66,7 +66,12 @@ public class MessageReceiverBean implements MessageListener {
             return;
         }
         for (Module m: dogbot3.getModules()) {
-            m.processMessage(message);
+            try {
+                m.processMessage(message);
+            } catch (Exception e) {
+                logger.error("Error in module whilst processing message", e);
+            }
+
 
         }
     }

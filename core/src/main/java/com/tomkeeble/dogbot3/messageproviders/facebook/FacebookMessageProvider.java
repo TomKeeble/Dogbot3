@@ -1,18 +1,18 @@
 package com.tomkeeble.dogbot3.messageproviders.facebook;
 
-import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.MessageProvider;
-import com.tomkeeble.dogbot3.messages.Thread;
 import com.tomkeeble.dogbot3.messages.Message;
-import org.jboss.ejb3.annotation.ResourceAdapter;
-import org.jboss.jca.common.api.metadata.spec.Messageadapter;
+import com.tomkeeble.dogbot3.messages.Thread;
 import org.jboss.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.jms.*;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.JMSException;
+import javax.jms.Queue;
 
 @LocalBean
 @Stateless
@@ -35,7 +35,14 @@ public class FacebookMessageProvider implements MessageProvider {
         logger.info("sendmessage: " + message.getMessage());
 
 //        context.createQueue("msg_send")
-            context.createProducer().send(queue, "sendmessage: " + message.getMessage());
+        javax.jms.Message msg = context.createTextMessage(message.getMessage());
+        try {
+            logger.info("GroupID: " + thread.getGroupId());
+            msg.setStringProperty("g_id", thread.getGroupId());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+        context.createProducer().send(queue, msg);
 
 
 

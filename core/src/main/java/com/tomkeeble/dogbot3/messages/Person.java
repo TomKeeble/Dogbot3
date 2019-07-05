@@ -1,7 +1,5 @@
 package com.tomkeeble.dogbot3.messages;
 
-import org.jgroups.logging.Log;
-
 import javax.persistence.*;
 
 @Entity

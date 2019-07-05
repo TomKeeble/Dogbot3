@@ -28,6 +28,10 @@ public class MessageBean {
             return null;
         }
         JSONObject obj = new JSONObject(msgbody);
+        if (obj.isNull("message")){
+            logger.warn("Null message");
+            return null;
+        }
 
         com.tomkeeble.dogbot3.messages.Message msg = new com.tomkeeble.dogbot3.messages.Message(obj.getString("message"));
 

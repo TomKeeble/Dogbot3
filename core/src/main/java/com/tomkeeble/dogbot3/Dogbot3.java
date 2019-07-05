@@ -1,6 +1,5 @@
 package com.tomkeeble.dogbot3;
 
-import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
 import com.tomkeeble.dogbot3.messages.Thread;
 import org.jboss.logging.Logger;
 
