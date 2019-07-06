@@ -52,6 +52,13 @@ public class Thread {
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public void sendMessage(MessageProvider mp, Message message) {
 
@@ -87,12 +94,53 @@ public class Thread {
 
         q.setMaxResults(n+1);
         List rl = q.getResultList();
-        if (rl.size()>=n) {
+        if (rl.size()>n) {
             return (Message) q.getResultList().get(n);
         } else {
             throw new MessageSelectionOutOfRangeException("Cannot select " + n + " messages back.");
         }
 
+
+    }
+
+    public static Actor getActorInGroup(EntityManager em, String user_id, Thread thread) {
+        Person p = Person.getPersonById(em, user_id);
+
+        Query q = em.createQuery("FROM Actor A WHERE A.person = " + p.getId() + " AND A.thread = " + thread.getId());
+        List results = q.setMaxResults(1).getResultList();
+
+        Actor a;
+//        q.setParameter("name", fid);
+        if (results.size() == 1) {
+            a = (Actor) results.get(0);
+        } else {
+            a = new Actor();
+            a.setNickname("nickname");
+            a.setPerson(p);
+            a.setThread(thread);
+            em.persist(a);
+        }
+
+        return a;
+
+    }
+
+    public static Thread getGroupByFid(EntityManager em, String fid) {
+        Query q = em.createQuery("FROM Thread G WHERE G.groupId = " + fid);
+        List results = q.setMaxResults(1).getResultList();
+        Thread g;
+
+//        q.setParameter("name", fid);
+        if (results.size() == 1) {
+            return (Thread) results.get(0);
+        } else {
+        g = new Thread();
+        g.setName("A Name");
+        g.setGroupId(fid);
+        em.persist(g);
+    }
+
+        return g;
 
     }
 

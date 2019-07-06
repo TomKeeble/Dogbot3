@@ -16,6 +16,8 @@ public class Message {
     @ManyToOne
     private Actor actor;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String message;
 
     public Message(String message) {

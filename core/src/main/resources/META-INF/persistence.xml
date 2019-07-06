@@ -8,7 +8,10 @@
         <class>com.tomkeeble.dogbot3.messages.Actor</class>
         <class>com.tomkeeble.dogbot3.messages.Thread</class>
         <class>com.tomkeeble.dogbot3.messages.Message</class>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <jar-file>QuoteModule.jar</jar-file>
         <properties>
+            <property name="hibernate.archive.autodetection" value="class, hbm" />
 <!--            <property name="hibernate.archive.autodetection" value="class, hbm"/>-->
 <!--            <property name="eclipselink.ddl-generation" value="create-tables" />-->
 <!--            <property name="eclipselink.ddl-generation.output-mode" value="database" />-->

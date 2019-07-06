@@ -1,5 +1,7 @@
 package com.tomkeeble.dogbot3;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tomkeeble.dogbot3.DTO.UpdateDTO;
 import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
 import org.jboss.ejb3.annotation.ResourceAdapter;
 import org.jboss.logging.Logger;
@@ -33,6 +35,9 @@ public class MessageReceiverBean implements MessageListener {
     private MessageBean messageBean;
 
     @Inject
+    private MetaDataUpdaterBean metaDataUpdaterBean;
+
+    @Inject
     FacebookMessageProvider msg_provider;
 
     @Inject
@@ -46,9 +51,19 @@ public class MessageReceiverBean implements MessageListener {
         try {
             if (message instanceof TextMessage) {
                 msg = (TextMessage) message;
-                logger.info("MESSAGE BEAN: Message received: " +
-                        msg.getText());
-                callMessageHandlers(messageBean.processMessage(msg.getText()));
+
+                if (message.getStringProperty("system").equals("true")){
+                    ObjectMapper mapper = new ObjectMapper();
+                    UpdateDTO update = mapper.readValue(msg.getText(), UpdateDTO.class);
+                    logger.info(update.getUsers().get(1).getName());
+                    metaDataUpdaterBean.doUpdate(update);
+                    return;
+                } else {
+
+                    logger.info("MESSAGE BEAN: Message received: " +
+                            msg.getText());
+                    callMessageHandlers(messageBean.processMessage(msg.getText()));
+                }
             } else {
                 logger.warn("Message of wrong type: " +
                         message.getClass().getName());
@@ -63,6 +78,9 @@ public class MessageReceiverBean implements MessageListener {
 
     private void callMessageHandlers(com.tomkeeble.dogbot3.messages.Message message) {
         if (message == null){
+            return;
+        }
+        if (message.getActor().getPerson().getId() == 669) {
             return;
         }
         for (Module m: dogbot3.getModules()) {

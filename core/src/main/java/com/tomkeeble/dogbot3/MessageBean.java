@@ -35,70 +35,20 @@ public class MessageBean {
 
         com.tomkeeble.dogbot3.messages.Message msg = new com.tomkeeble.dogbot3.messages.Message(obj.getString("message"));
 
-        Thread group = getGroupByFid(obj.getString("thread_id"));
+        Thread group = Thread.getGroupByFid(entityManager,obj.getString("thread_id"));
         logger.info(group.getName());
         msg.setThread(group);
-        msg.setActor(getActorInGroup(obj.getString("user_id"), group));
+        msg.setActor(Thread.getActorInGroup(entityManager, obj.getString("user_id"), group));
         entityManager.persist(msg);
         entityManager.flush();
 
         return msg;
     }
 
-    public Thread getGroupByFid(String fid) {
-        Query q = entityManager.createQuery("FROM Thread G WHERE G.groupId = " + fid);
-        List results = q.setMaxResults(1).getResultList();
 
-//        q.setParameter("name", fid);
-        if (results.size() == 1) {
-            return (Thread) results.get(0);
-        }
 
-        logger.info("Unable to find group");
-        return entityManager.find(Thread.class, Long.valueOf(1));
 
-    }
 
-    public Person getPersonById(String user_id) {
-        Query q = entityManager.createQuery("FROM Person P WHERE P.userID = " + user_id);
-        List results = q.setMaxResults(1).getResultList();
 
-        Person p;
-
-//        q.setParameter("name", fid);
-        if (results.size() == 1) {
-            p = (Person) results.get(0);
-        } else {
-            p = new Person();
-            p.setName("A Name");
-            p.setUserID(user_id);
-            entityManager.persist(p);
-            logger.info("New person created");
-        }
-        return p;
-    }
-
-    public Actor getActorInGroup(String user_id, Thread thread) {
-        Person p = getPersonById(user_id);
-
-        Query q = entityManager.createQuery("FROM Actor A WHERE A.person = " + p.getId());
-        List results = q.setMaxResults(1).getResultList();
-
-        Actor a;
-//        q.setParameter("name", fid);
-        if (results.size() == 1) {
-            a = (Actor) results.get(0);
-        } else {
-            a = new Actor();
-            a.setNickname("nickname");
-            a.setPerson(p);
-            a.setThread(thread);
-            entityManager.persist(a);
-            logger.info("New actor created");
-        }
-
-       return a;
-
-    }
 
 }

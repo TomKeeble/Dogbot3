@@ -25,6 +25,7 @@ dependencies {
     compileOnly 'org.wildfly:wildfly-spec-api:11.0.0.Final'
     compileOnly 'org.wildfly:wildfly-ejb3:11.0.0.Final'
     compile group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.6.3'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 
 //    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
 }
