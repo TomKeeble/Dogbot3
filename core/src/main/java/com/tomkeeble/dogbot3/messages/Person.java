@@ -55,4 +55,7 @@ public class Person {
         }
         return p;
     }
+    public boolean equals(Person person){
+        return id==person.id;
+    }
 }
