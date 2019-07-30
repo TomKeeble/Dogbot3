@@ -55,7 +55,11 @@ public class MarkovModule implements Module {
                     }
                 }
             }
-            message.getThread().sendMessage(msg_provider, new Message(new Text(history).make_sentence()));
+            String newtext=new Text(history).make_sentence();
+            if(newtext.equals("Not enough source data.")){
+                newtext=newtext+" ("+history.size()+" messages)";
+            }
+            message.getThread().sendMessage(msg_provider, new Message(newtext));
         }
     }
 
