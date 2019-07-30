@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Stateless
-@Singleton
+//@Singleton
 public class CommandManagerBean {
 
     private static Logger logger = Logger.getLogger(CommandManagerBean.class);

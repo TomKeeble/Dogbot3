@@ -1,22 +1,11 @@
 package com.tomkeeble.dogbot3.modules;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-import com.tomkeeble.dogbot3.CommandManagerBean;
-import com.tomkeeble.dogbot3.Commands.Argument;
-import com.tomkeeble.dogbot3.Commands.Command;
-import com.tomkeeble.dogbot3.Commands.MessageContext;
-import com.tomkeeble.dogbot3.MessageConverter;
-import com.tomkeeble.dogbot3.MessageConverterFactory;
-import com.tomkeeble.dogbot3.exceptions.MessageSelectionOutOfRangeException;
 import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
-import com.tomkeeble.dogbot3.messages.Message;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Random;
 
 public class UwUCommand {
 

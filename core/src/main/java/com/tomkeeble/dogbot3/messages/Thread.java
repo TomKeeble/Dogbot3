@@ -51,6 +51,14 @@ public class Thread {
         return messages;
     }
 
+    public List<Message> getAllMessages(EntityManager em){
+//        Query q = em.createQuery("FROM Message M WHERE M.thread = " + this.getId());
+        Query q = em.createQuery("FROM Message M");
+        List results = q.setMaxResults(10000).getResultList();
+
+        return results;
+    }
+
 
     public Long getId() {
         return id;

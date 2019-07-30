@@ -52,7 +52,7 @@ public class Text {
 
     }
     public String make_sentence(){
-        final int tries = 20;
+        final int tries = 2000;
         final double mor = 0.7d;
         final int mot = 15;
 

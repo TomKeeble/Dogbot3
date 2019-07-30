@@ -1,5 +1,6 @@
 package com.tomkeeble.dogbot3.modules;
 
+import com.tomkeeble.dogbot3.Command;
 import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.Module;
 import com.tomkeeble.dogbot3.exceptions.MessageSelectionOutOfRangeException;
@@ -47,9 +48,9 @@ public class MarkovModule implements Module {
         if (message.getMessage().toLowerCase().startsWith("!simulate")) {
             Person sender = message.getActor().getPerson();
             List<String> history = new ArrayList<String>();
-            for(Message pastMessage:message.getThread().getMessages()){
+            for(Message pastMessage:message.getThread().getAllMessages(entityManager)){
                 if(pastMessage.getActor().getPerson().equals(sender)){
-                    if(!pastMessage.getMessage().startsWith("!")) {
+                    if(pastMessage.getMessage() != null && !pastMessage.getMessage().startsWith("!")) {
                         history.add(pastMessage.getMessage());
                     }
                 }
@@ -59,7 +60,12 @@ public class MarkovModule implements Module {
     }
 
     @Override
-    public void processHistoricMessage(Message message) {
+    public void processDeadMessage(Message message) {
         //Do nothing
+    }
+
+    @Override
+    public List<Command> getCommands() {
+        return null;
     }
 }
