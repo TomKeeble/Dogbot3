@@ -18,13 +18,14 @@ import javax.jms.MessageListener;
         @ActivationConfigProperty(propertyName = "acknowledgeMode",
                 propertyValue = "Auto-acknowledge"),
         @ActivationConfigProperty(propertyName = "destination",
-                propertyValue = "msg_recv"),
+                propertyValue = "dead_msg_recv"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "useJNDI", propertyValue = "false"),
+        @ActivationConfigProperty(propertyName = "maxSessions", propertyValue = "64"),
 })
-public class MessageReceiverBean implements MessageListener {
+public class DeadMessageReceiverBean implements MessageListener {
 
-    private static Logger logger = Logger.getLogger(MessageReceiverBean.class);
+    private static Logger logger = Logger.getLogger(DeadMessageReceiverBean.class);
 
     @Inject
     MessageProcessorBean mpb;
@@ -32,9 +33,8 @@ public class MessageReceiverBean implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        logger.info("Live MEssage");
-        mpb.handleMessage(message, true);
-
+        logger.info("Dead message");
+        mpb.handleMessage(message, false);
     }
 
 

@@ -4,6 +4,7 @@ apply plugin: 'java'
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/plugins-release/" }
 }
 
 
@@ -16,5 +17,6 @@ dependencies {
     compileOnly 'org.wildfly:wildfly-spec-api:11.0.0.Final'
     compileOnly 'org.wildfly:wildfly-ejb3:11.0.0.Final'
     compile group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.6.3'
+    compile group: 'com.beust', name: 'jcommander', version: '1.74'
 
 }

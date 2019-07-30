@@ -1,5 +1,8 @@
 package com.tomkeeble.dogbot3.modules;
 
+import com.tomkeeble.dogbot3.Command;
+import com.tomkeeble.dogbot3.Commands.Argument;
+import com.tomkeeble.dogbot3.Commands.MessageContext;
 import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.Module;
 import com.tomkeeble.dogbot3.exceptions.MessageSelectionOutOfRangeException;
@@ -22,8 +25,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
-@Stateful
+@Stateless
 @Named("UwUModule")
 public class UwUModule implements Module {
 
@@ -36,6 +40,11 @@ public class UwUModule implements Module {
     @Override
     public String getClassName() {
         return UwUModule.class.getName();
+    }
+
+    @com.tomkeeble.dogbot3.Commands.Command(name="uwu")
+    public void uwu(@MessageContext Message command, @Argument Message target) {
+        System.out.println("running uwu command");
     }
 
     @Override
@@ -62,6 +71,11 @@ public class UwUModule implements Module {
                 message.getThread().sendMessage(msg_provider, new Message(e.getMessage()));
                 return;
             }
+
+            if (message.getReplied_to() != null) {
+                uwuText=message.getReplied_to().getMessage();
+            }
+
             uwuText=uwuText.replaceAll("[rl]","w");
             uwuText=uwuText.replaceAll("[RL]","W");
             uwuText=uwuText.replaceAll("(?i)youw","ur");
@@ -71,7 +85,7 @@ public class UwUModule implements Module {
             uwuText=uwuText.replaceAll("(?i)(n)([aeiou])","$1y$2");
 
             if(faced) {
-                String[] faces={":3","(^³^)","uwu","OwO",":////",";-;;;",">.<"};
+                String[] faces={":3","(^³^)","uwu","OwO",":////",";-;;;",">.<", "😘", "😉", "😰", "😻","👀", "🍆", "😩"};
                 int facecount=Math.max(1,(int)(Math.round(uwuText.length()/10)*Math.random()));
                 for(int i=facecount;i>0; i--){
                     int pivot=new Random().nextInt(uwuText.length());
@@ -84,7 +98,15 @@ public class UwUModule implements Module {
     }
 
     @Override
-    public void processHistoricMessage(Message message) {
-        //Do nothing
+    public void processDeadMessage(Message message) {
+        //do nothing
     }
+
+    @Override
+    public List<Command> getCommands() {
+        Vector<Command> commands = new Vector<>();
+//        commands.add(new UwUCommand());
+        return commands;
+    }
+
 }

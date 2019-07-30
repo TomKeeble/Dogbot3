@@ -11,6 +11,7 @@ description = "Dogbot3 Server"
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/plugins-release/" }
 }
 
 //mainClassName = "dogbot3.Main"
@@ -26,6 +27,7 @@ dependencies {
     compileOnly 'org.wildfly:wildfly-ejb3:11.0.0.Final'
     compile group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.6.3'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile group: 'com.beust', name: 'jcommander', version: '1.74'
 
 //    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
 }

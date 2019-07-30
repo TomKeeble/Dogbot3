@@ -1,0 +1,29 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'war'
+
+group = 'dogbot3'
+version = '1.0-SNAPSHOT'
+description = "Dogbot3 Server"
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/plugins-release/" }
+}
+
+//mainClassName = "dogbot3.Main"
+
+dependencies {
+//    deploy project(':core')
+}
+war{
+    manifest {
+        attributes(
+                "Manifest-Version": "1.0",
+                "Class-Path": configurations.providedCompile.collect {" lib/" + it.getName() }.join(' ')
+        )
+    }
+
+}
+
+defaultTasks 'war'

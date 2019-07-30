@@ -1,0 +1,1 @@
+force intellij to build war file.

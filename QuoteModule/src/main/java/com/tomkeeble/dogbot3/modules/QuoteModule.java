@@ -1,5 +1,6 @@
 package com.tomkeeble.dogbot3.modules;
 
+import com.tomkeeble.dogbot3.Command;
 import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.Module;
 import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
@@ -36,7 +37,15 @@ public class QuoteModule implements Module {
 
     @Override
     public void processMessage(Message message) {
+
+    }
+
+    @Override
+    public void processDeadMessage(Message message) {
         System.out.println("Message!");
+        if(message.getMessage() == null) {
+            return;
+        }
 //        message.getThread().sendMessage(msg_provider, new Message("Hello World from " + this.getClassName()));
         if (message.getMessage().matches(".*\"(.*)\" *-+ *(.*) *\\(.*\\).*")) {
             String quote=message.getMessage().replaceAll(".*(\".*\" *-+ *.* *\\(.*\\)).*","$1");
@@ -52,12 +61,14 @@ public class QuoteModule implements Module {
 
             entityManager.persist(q);
             entityManager.flush();
-            message.getThread().sendMessage(msg_provider, new Message(quote));
+//            message.getThread().sendMessage(msg_provider, new Message(quote));
         }
     }
 
     @Override
-    public void processHistoricMessage(Message message) {
-        //Do nothing
+    public List<Command> getCommands() {
+        return null;
     }
+
+
 }

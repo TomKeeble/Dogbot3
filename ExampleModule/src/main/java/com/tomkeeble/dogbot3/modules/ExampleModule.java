@@ -1,5 +1,6 @@
 package com.tomkeeble.dogbot3.modules;
 
+import com.tomkeeble.dogbot3.Command;
 import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.Module;
 import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
@@ -11,6 +12,7 @@ import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 @Stateless
 @Named("ExampleModule")
@@ -31,10 +33,17 @@ public class ExampleModule implements Module {
         if (message.getMessage().startsWith("!goodboi")) {
             message.getThread().sendMessage(msg_provider, new Message(message.getActor().getNickname() + " is a goodboi 😊"));
         }
+
     }
 
     @Override
-    public void processHistoricMessage(Message message) {
-        //Do nothing
+    public void processDeadMessage(Message message) {
+        //do nothing
     }
+
+    @Override
+    public List<Command> getCommands() {
+        return null;
+    }
+
 }
