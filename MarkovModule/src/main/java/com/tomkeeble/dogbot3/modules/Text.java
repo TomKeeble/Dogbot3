@@ -106,16 +106,26 @@ public class Text {
         int overlapOver = overlapMax + 1;
         int gram_count = Math.max((words.size() - overlapMax), 1);
         List<List<String>> grams = new ArrayList<List<String>>(){};
-        for (int i=0;i<gram_count;i++){
-            grams.add(words.subList(i,i+overlapOver));
-        }
-        for (List<String> g:grams){
-            String gram_joined = String.join(" ",g);
-            if (this.rejoined_text.contains(gram_joined)) {
-                return false;
+        try {
+            for (int i = 0; i < gram_count; i++) {
+                grams.add(words.subList(i, Math.min(words.size(), i + overlapOver)));
             }
+            for (List<String> g : grams) {
+                String gram_joined = String.join(" ", g);
+                if (this.rejoined_text.contains(gram_joined)) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+            for(StackTraceElement e:ex.getStackTrace()){
+                System.out.println(e.toString());
+            }
+            return false;
+        }
+
     }
     private List<String> word_split(String sentence) {
         String[] words=Pattern.compile("\\s+").split(sentence);
