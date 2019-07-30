@@ -95,6 +95,9 @@ public class UwUModule implements Module {
 
             message.getThread().sendMessage(msg_provider, new Message(uwuText));
         }
+        else if (message.getMessage().toLowerCase().startsWith("!stimulate")){
+            message.getThread().sendMessage(msg_provider, new Message(">.< thank you "+message.getActor().getNickname()));
+        }
     }
 
     @Override
