@@ -35,44 +35,48 @@ public class MessageBean {
     FacebookMessageProvider messageProvider;
 
     public Message processMessage(String msgbody) {
-
-        if (msgbody == null) {
-            logger.warn("Null message");
-            return null;
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        MessageDTO messageDTO;
         try {
-            messageDTO = mapper.readValue(msgbody, MessageDTO.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.warn("Null message");
-            return null;
-        }
+            if (msgbody == null) {
+                logger.warn("Null message");
+                return null;
+            }
 
-        com.tomkeeble.dogbot3.messages.Message msg = new com.tomkeeble.dogbot3.messages.Message(messageDTO.getMessage());
-
-        Thread group = Thread.getGroupByFid(entityManager, messageDTO.getThread_id());
-        logger.info(group.getName());
-        msg.setThread(group);
-        msg.setActor(Thread.getActorInGroup(entityManager, messageDTO.getUser_id(), group));
-        msg.setFb_id(messageDTO.getMsg_id());
-        msg.setTimestamp(Date.from(Instant.ofEpochMilli(Long.parseLong(messageDTO.getTimestamp()))));
-
-        if (messageDTO.getReplied_to() != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            MessageDTO messageDTO;
             try {
-                msg.setReplied_to(Message.getMessageByFid(entityManager, messageDTO.getReplied_to()));
-            } catch (MessageDoesNotExistException e) {
+                messageDTO = mapper.readValue(msgbody, MessageDTO.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+                logger.warn("Null message");
+                return null;
+            }
+
+            com.tomkeeble.dogbot3.messages.Message msg = new com.tomkeeble.dogbot3.messages.Message(messageDTO.getMessage());
+
+            Thread group = Thread.getGroupByFid(entityManager, messageDTO.getThread_id());
+//            logger.info(group.getName());
+            msg.setThread(group);
+            msg.setActor(Thread.getActorInGroup(entityManager, messageDTO.getUser_id(), group));
+            msg.setId(messageDTO.getMsg_id());
+            msg.setTimestamp(Date.from(Instant.ofEpochMilli(Long.parseLong(messageDTO.getTimestamp()))));
+
+            if (messageDTO.getReplied_to() != null) {
+                try {
+                    msg.setReplied_to(Message.getMessageByFid(entityManager, messageDTO.getReplied_to()));
+                } catch (MessageDoesNotExistException e) {
 //                msg.getThread().sendMessage(messageProvider, new Message("Error whilst processing message: " + e.toString()));
 //                e.printStackTrace();
+                }
             }
+
+            entityManager.persist(msg);
+            entityManager.flush();
+
+            return msg;
+        } catch (Exception e) {
+            logger.error("Error in Messagebean", e);
+            return new Message("Error");
         }
-
-        entityManager.persist(msg);
-        entityManager.flush();
-
-        return msg;
     }
 
 

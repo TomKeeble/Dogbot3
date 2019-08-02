@@ -42,7 +42,7 @@ public class QuoteModule implements Module {
 
     @Override
     public void processDeadMessage(Message message) {
-        System.out.println("Message!");
+//        System.out.println("Message!");
         if(message.getMessage() == null) {
             return;
         }

@@ -50,11 +50,11 @@ public class Dogbot3 {
         logger.info("Starting Dogbot3...");
 
 //        logger.info(entityManager.find(Thread.class, Long.valueOf(1)).getName());
-        Person p = new Person();
-        p.setUserID("100026388580882");
-        p.setName("Dogbot");
-        entityManager.persist(p);
-        entityManager.flush();
+//        Person p = new Person();
+//        p.setUserID("100026388580882");
+//        p.setName("Dogbot");
+//        entityManager.persist(p);
+//        entityManager.flush();
 
         for (Module plugin : discovered_modules) {
             modules.add(plugin);

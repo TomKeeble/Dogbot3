@@ -33,7 +33,7 @@ public class DeadMessageReceiverBean implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        logger.info("Dead message");
+//        logger.info("Dead message");
         mpb.handleMessage(message, false);
     }
 

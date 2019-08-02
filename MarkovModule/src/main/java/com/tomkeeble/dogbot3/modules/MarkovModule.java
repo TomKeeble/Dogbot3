@@ -5,6 +5,7 @@ import com.tomkeeble.dogbot3.Dogbot3;
 import com.tomkeeble.dogbot3.Module;
 import com.tomkeeble.dogbot3.exceptions.MessageSelectionOutOfRangeException;
 import com.tomkeeble.dogbot3.messageproviders.facebook.FacebookMessageProvider;
+import com.tomkeeble.dogbot3.messages.Actor;
 import com.tomkeeble.dogbot3.messages.Message;
 import com.tomkeeble.dogbot3.messages.Person;
 import com.tomkeeble.dogbot3.messages.Thread;
@@ -43,13 +44,23 @@ public class MarkovModule implements Module {
 
     @Override
     public void processMessage(Message message) {
-        System.out.println("Message!");
+//        System.out.println("Message!");
 //        message.getThread().sendMessage(msg_provider, new Message("Hello World from " + this.getClassName()));
-        if (message.getMessage().toLowerCase().startsWith("!simulate")) {
-            Person sender = message.getActor().getPerson();
+        if (message.getMessage() != null && message.getMessage().toLowerCase().startsWith("!simulate")) {
+            Person subject = message.getActor().getPerson();
+            Actor a;
+            if (message.getMessage().length()>10) {
+                a = message.getThread().searchActorInThread(entityManager, message.getMessage().substring(10));
+                if (a != null) {
+                    subject = a.getPerson();
+                }
+            }
+
+
             List<String> history = new ArrayList<String>();
             for(Message pastMessage:message.getThread().getAllMessages(entityManager)){
-                if(pastMessage.getActor().getPerson().equals(sender)){
+//                if(pastMessage.getActor().getPerson().equals(sender)){
+                if(pastMessage.getActor().getPerson().equals(subject)){
                     if(pastMessage.getMessage() != null && !pastMessage.getMessage().startsWith("!")) {
                         history.add(pastMessage.getMessage());
                     }

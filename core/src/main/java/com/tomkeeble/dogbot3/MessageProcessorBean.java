@@ -44,8 +44,8 @@ public class MessageProcessorBean {
                     return;
                 } else {
 
-                    logger.info("MESSAGE BEAN: Message received: " +
-                            msg.getText());
+//                    logger.info("MESSAGE BEAN: Message received: " +
+//                            msg.getText());
                     com.tomkeeble.dogbot3.messages.Message messageObj = messageBean.processMessage(msg.getText());
                     if (messageObj.getTimestamp().after(Date.from(Instant.now().minusSeconds(30)))) {
                         isLive = true;
@@ -73,7 +73,7 @@ public class MessageProcessorBean {
             return;
         }
         callDeadMessageHandlers(message);
-        if (message.getActor().getPerson().getId() == 669 || message.getActor().getPerson().getUserID().equals("100026388580882")) {
+        if (message.getActor().getPerson().getId() == "669" || message.getActor().getPerson().getId().equals("100026388580882")) {
             return;
         }
 //        commandManagerBean.processCommand(message);

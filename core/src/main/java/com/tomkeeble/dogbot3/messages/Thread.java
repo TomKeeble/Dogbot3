@@ -14,20 +14,23 @@ import java.util.List;
 @Table(name="thread")
 public class Thread {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy= GenerationType.AUTO)
+//    private Long id;
 
+
+  /**
+     * The group's ID (according to fb)
+     */
+    @Id
+    private String id;
 
     /**
      * The name of the group (according to fb)
      */
     private String name;
 
-    /**
-     * The group's ID (according to fb)
-     */
-    private String groupId;
+
 
     public List<Actor> getActors() {
         return actors;
@@ -52,19 +55,19 @@ public class Thread {
     }
 
     public List<Message> getAllMessages(EntityManager em){
-//        Query q = em.createQuery("FROM Message M WHERE M.thread = " + this.getId());
-        Query q = em.createQuery("FROM Message M");
+        Query q = em.createQuery("FROM Message M WHERE M.thread = " + this.getId());
+//        Query q = em.createQuery("FROM Message M");
         List results = q.setMaxResults(10000).getResultList();
 
         return results;
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -81,13 +84,13 @@ public class Thread {
         this.name = name;
     }
 
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
+//    public String getGroupId() {
+//        return groupId;
+//    }
+//
+//    public void setGroupId(String groupId) {
+//        this.groupId = groupId;
+//    }
 
     public Message getNMessagesBack(EntityManager em, int n) throws MessageSelectionOutOfRangeException {
 
@@ -96,8 +99,8 @@ public class Thread {
         Root<Message> messageRoot = cq.from(Message.class);
         cq.select(messageRoot)
                 .where(
-                        cb.equal(messageRoot.get("thread"), this.id)
-                ).orderBy(cb.desc(messageRoot.get("id")));
+                        cb.equal(messageRoot.get("thread"), this)
+                ).orderBy(cb.desc(messageRoot.get("timestamp")));
         Query q = em.createQuery(cq);
 
         q.setMaxResults(n+1);
@@ -134,7 +137,7 @@ public class Thread {
     }
 
     public static Thread getGroupByFid(EntityManager em, String fid) {
-        Query q = em.createQuery("FROM Thread G WHERE G.groupId = " + fid);
+        Query q = em.createQuery("FROM Thread G WHERE G.id = " + fid);
         List results = q.setMaxResults(1).getResultList();
         Thread g;
 
@@ -144,12 +147,24 @@ public class Thread {
         } else {
         g = new Thread();
         g.setName("A Name");
-        g.setGroupId(fid);
+        g.setId(fid);
         em.persist(g);
     }
 
         return g;
 
+    }
+
+    public Actor searchActorInThread(EntityManager em, String search) {
+        Query q =em.createQuery("FROM Actor A WHERE A.person.name LIKE :search");
+        q.setParameter("search", search);
+        List results = q.setMaxResults(1).getResultList();
+
+        if (results.size() == 1) {
+            return (Actor) results.get(0);
+        } else {
+            return null;
+        }
     }
 
 

@@ -10,9 +10,12 @@ import java.util.List;
 @Table(name="message")
 public class Message {
 
+//    @Id
+//    @GeneratedValue(strategy= GenerationType.AUTO)
+//    private Long id;
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     @ManyToOne
     private Thread thread;
@@ -27,9 +30,17 @@ public class Message {
     @ManyToOne
     private Message replied_to;
 
-    private String fb_id;
+
 
     private Date timestamp;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Date getTimestamp() {
         return timestamp;
@@ -39,13 +50,13 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public String getFb_id() {
-        return fb_id;
-    }
-
-    public void setFb_id(String fb_id) {
-        this.fb_id = fb_id;
-    }
+//    public String getFb_id() {
+//        return fb_id;
+//    }
+//
+//    public void setFb_id(String fb_id) {
+//        this.fb_id = fb_id;
+//    }
 
     public Message(String message) {
         this.message = message;
@@ -87,7 +98,7 @@ public class Message {
     }
 
     public static Message getMessageByFid(EntityManager em, String fid) throws MessageDoesNotExistException {
-        Query q = em.createQuery("FROM Message M WHERE M.fb_id = ?1").setParameter(1, fid);
+        Query q = em.createQuery("FROM Message M WHERE M.id = ?1").setParameter(1, fid);
         List results = q.setMaxResults(1).getResultList();
 
         if (results.size() == 1) {

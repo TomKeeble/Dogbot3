@@ -7,27 +7,28 @@ import java.util.List;
 @Table(name="person")
 public class Person {
 
+//    @Id
+//    @GeneratedValue(strategy= GenerationType.AUTO)
+//    private Long id;
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     /**
      * The person's real name
      */
     private String name;
 
-    private String userID;
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public String getUserID() {
-        return userID;
-    }
+//    public String getUserID() {
+//        return id;
+//    }
 
     public void setUserID(String userID) {
-        this.userID = userID;
+        this.id = userID;
     }
 
     public String getName() {
@@ -39,7 +40,7 @@ public class Person {
     }
 
     public static Person getPersonById(EntityManager em, String user_id) {
-        Query q = em.createQuery("FROM Person P WHERE P.userID = " + user_id);
+        Query q = em.createQuery("FROM Person P WHERE P.id = " + user_id);
         List results = q.setMaxResults(1).getResultList();
 
         Person p;
@@ -56,6 +57,6 @@ public class Person {
         return p;
     }
     public boolean equals(Person person){
-        return id==person.id;
+        return this.id.equals(person.id);
     }
 }

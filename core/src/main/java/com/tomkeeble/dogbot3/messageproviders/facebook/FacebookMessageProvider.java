@@ -37,8 +37,8 @@ public class FacebookMessageProvider implements MessageProvider {
 //        context.createQueue("msg_send")
         javax.jms.Message msg = context.createTextMessage(message.getMessage());
         try {
-            logger.info("GroupID: " + thread.getGroupId());
-            msg.setStringProperty("g_id", thread.getGroupId());
+            logger.info("GroupID: " + thread.getId());
+            msg.setStringProperty("g_id", thread.getId());
         } catch (JMSException e) {
             e.printStackTrace();
         }
