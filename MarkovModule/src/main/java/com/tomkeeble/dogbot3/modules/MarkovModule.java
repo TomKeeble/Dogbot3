@@ -66,7 +66,12 @@ public class MarkovModule implements Module {
                     }
                 }
             }
-            String newtext=new Text(history).make_sentence();
+            String newtext;
+            try {
+                newtext = new Text(history).make_sentence();
+            } catch (Exception e) { //TODO fix this
+                newtext = "Error: " + e.getMessage();
+            }
             if(newtext.equals("Not enough source data.")){
                 newtext=newtext+" ("+history.size()+" messages)";
             }
