@@ -10,20 +10,25 @@
         <class>com.tomkeeble.dogbot3.messages.Message</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <jar-file>QuoteModule.jar</jar-file>
+        <jar-file>UwUModule.jar</jar-file>
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm" />
 <!--            <property name="hibernate.archive.autodetection" value="class, hbm"/>-->
 <!--            <property name="eclipselink.ddl-generation" value="create-tables" />-->
 <!--            <property name="eclipselink.ddl-generation.output-mode" value="database" />-->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-<!--            <property name="hibernate.show_sql" value="true"/>-->
-            <property name="hibernate.transaction.flus_before_completion" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.transaction.flush_before_completion" value="true"/>
 <!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDB103Dialect"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL55Dialect"/>
 <!--            <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver" />-->
 <!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/dogbot" />-->
 <!--            <property name="javax.persistence.jdbc.user" value="dogbot" />-->
 <!--            <property name="javax.persistence.jdbc.password" value="dogbot" />-->
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.infinispan.SharedInfinispanRegionFactory" />
+<!--            <property name="hibernate.cache.infinispan.cachemanager" value="java:CacheManager/entity" />-->
         </properties>
     </persistence-unit>
 </persistence>

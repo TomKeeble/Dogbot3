@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,8 +29,9 @@ public class Dogbot3 {
     private static MessageProvider messageProvider;
 
 
+    @Produces
     @PersistenceContext(unitName = "persistence")
-    private EntityManager entityManager;
+    private static EntityManager entityManager;
 
     private final Set<Module> modules = new HashSet<>();
 

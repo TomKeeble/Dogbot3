@@ -41,7 +41,11 @@ public class Actor {
     }
 
     public String getNickname() {
-        return nickname;
+        if (nickname.equals("NO-NICK")){
+            return this.getPerson().getName();
+        } else {
+            return nickname;
+        }
     }
 
     public void setNickname(String nickname) {

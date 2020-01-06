@@ -31,7 +31,7 @@ import java.util.Vector;
 @Named("UwUModule")
 public class UwUModule implements Module {
 
-    @PersistenceContext(unitName = "persistence")
+    @Inject
     EntityManager entityManager;
 
     @Inject

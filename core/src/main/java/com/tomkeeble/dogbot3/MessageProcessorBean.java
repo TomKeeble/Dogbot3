@@ -42,7 +42,10 @@ public class MessageProcessorBean {
                     logger.info(update.getUsers().get(1).getName());
                     metaDataUpdaterBean.doUpdate(update);
                     return;
-                } else {
+                } else if  (message.getStringProperty("system").equals("delete")) {
+                    messageBean.deleteMessage(msg.getText());
+
+                }else{
 
 //                    logger.info("MESSAGE BEAN: Message received: " +
 //                            msg.getText());

@@ -126,7 +126,7 @@ public class Thread {
             a = (Actor) results.get(0);
         } else {
             a = new Actor();
-            a.setNickname("nickname");
+            a.setNickname("NO-NICK");
             a.setPerson(p);
             a.setThread(thread);
             em.persist(a);

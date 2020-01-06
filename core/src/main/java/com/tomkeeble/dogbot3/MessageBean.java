@@ -9,6 +9,7 @@ import com.tomkeeble.dogbot3.messages.Actor;
 import com.tomkeeble.dogbot3.messages.Message;
 import com.tomkeeble.dogbot3.messages.Person;
 import com.tomkeeble.dogbot3.messages.Thread;
+import org.hibernate.SessionFactory;
 import org.jboss.logging.Logger;
 import org.json.JSONObject;
 
@@ -28,11 +29,12 @@ public class MessageBean {
 
     private static Logger logger = Logger.getLogger(MessageBean.class);
 
-    @PersistenceContext(unitName = "persistence", type = PersistenceContextType.EXTENDED)
+    @Inject
     private EntityManager entityManager;
 
     @Inject
     FacebookMessageProvider messageProvider;
+
 
     public Message processMessage(String msgbody) {
         try {
@@ -79,7 +81,20 @@ public class MessageBean {
         }
     }
 
+    public void deleteMessage(String mid) {
+        try {
+            logger.info("Deleting message");
+            Message m = Message.getMessageByFid(entityManager, mid);
+            m.deleteMessage();
 
+            entityManager.getEntityManagerFactory().getCache().evict(Message.class, mid);
+
+            entityManager.flush();
+        } catch (MessageDoesNotExistException e) {
+            e.printStackTrace();
+            logger.error("Message marked for deletion does not exist.");
+        }
+    }
 
 
 

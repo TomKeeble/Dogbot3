@@ -53,7 +53,7 @@ public class ExampleModule implements Module {
             }
 
 //            LinkedHashMap<Actor, Long> sortedLeaderboard = new LinkedHashMap<>();
-            leaderboard.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEach(actorLongEntry -> sb.append(actorLongEntry.getKey().getNickname() + ": " + actorLongEntry.getValue().toString() + "\n"));
+            leaderboard.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(15).forEach(actorLongEntry -> sb.append(actorLongEntry.getKey().getNickname() + ": " + actorLongEntry.getValue().toString() + "\n"));
 
 //            output = output + actor.getNickname() + ": " + count.toString() + "\n";
             message.getThread().sendMessage(msg_provider, new Message(sb.toString()));
